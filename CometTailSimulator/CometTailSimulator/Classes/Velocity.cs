@@ -1,13 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CometTailSimulator.Classes
+﻿namespace CometTailSimulator.Classes
 {
-    class Velocity
+    public class Velocity
     {
-        //vector
+        private double x;
+        private double y;
+        public Velocity(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public Velocity Add(Velocity second)
+        {
+            double newX = this.x + second.x;
+            double newY = this.y + second.y;
+
+            return new Velocity(newX, newY);
+        }
     }
 }

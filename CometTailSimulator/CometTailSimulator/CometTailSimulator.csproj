@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\Particle.cs" />
     <Compile Include="Classes\PixelParticle.cs" />
     <Compile Include="Classes\Velocity.cs" />
