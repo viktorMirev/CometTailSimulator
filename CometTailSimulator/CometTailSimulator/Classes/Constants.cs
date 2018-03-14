@@ -11,7 +11,7 @@
         public static readonly double p = 1.5;             //the AVG density of the particles
         public static readonly double dayInS = 86400;      //the number of seconds in a day
         public static readonly int scale = 15000000;       //meters per pixl
-        public static readonly double micron = 1 * (10e-6);   //micron
+        public static readonly double micron = 1 * (10e-6);//micron
 
     }
 }

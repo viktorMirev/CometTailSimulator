@@ -49,6 +49,8 @@ namespace CometTailSimulator.Classes
         public void Update()
         {
             this.vector.Add(CalculateSunVector());
+            this.x += (int)this.vector.X;
+            this.y += (int)this.vector.Y;
         }
 
 
