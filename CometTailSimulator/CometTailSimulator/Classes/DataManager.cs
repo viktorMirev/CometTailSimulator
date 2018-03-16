@@ -15,7 +15,7 @@ namespace CometTailSimulator.Classes
         private List<DataModel> data;
         private int dataIndex;
 
-        DataManager(string dir)
+        public DataManager(string dir)
         {
             this.dataIndex = 0;
             this.directory = dir;
@@ -46,6 +46,8 @@ namespace CometTailSimulator.Classes
 
         public DataModel NextData()
         {
+            if (dataIndex == data.Count) return null;
+
             return data[this.dataIndex++];
         }
     }

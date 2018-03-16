@@ -9,26 +9,29 @@ namespace CometTailSimulator.Classes
         private Velocity vector;
         private double size;
 
+        public double X { get => x; private set => x = value; }
+        public double Y { get => y; private set => y = value; }
+
         public Particle(double x, double y, double size,Velocity vector)
         {
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
             this.size = size;
             this.vector = vector;
         }
         private double DistanceTo(double x, double y)
         {
-            return Math.Sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
+            return Math.Sqrt((this.X - x) * (this.X - x) + (this.Y - y) * (this.Y - y));
         }
 
         private double dX()        //pixel differense in the x of the sun and the particle
         {
-            return this.x - Constants.centralMassX;
+            return this.X - Constants.centralMassX;
         }
 
         private double dY()        //pixel differense in the y of the sun and the particle
         {
-            return this.y - Constants.centralMassY;
+            return this.Y - Constants.centralMassY;
         }
 
         private Velocity CalculateSunVector()
@@ -49,8 +52,8 @@ namespace CometTailSimulator.Classes
         public void Update()
         {
             this.vector.Add(CalculateSunVector());
-            this.x += this.vector.X;
-            this.y += this.vector.Y;
+            this.X += this.vector.X;
+            this.Y += this.vector.Y;
         }
 
 
