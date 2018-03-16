@@ -2,17 +2,19 @@
 {
     abstract class Constants
     {
-        public static readonly int centralMassX = 0;            //the x coordinate of the sun
-        public static readonly int centralMassY = 0;            //the y coordinate of the sun
-        public static readonly double c = 300000000;            //the speed of light
-        public static readonly double L = 2 * (10e30);          //the luminosity of the sun
-        public static readonly double AU = 149600000000;        //the distance between The Earth & the sun
-        public static readonly double A = 0.5;                  //the AVG albedo of the particles
-        public static readonly double p = 1.5;                  //the AVG density of the particles
-        public static readonly double dayInS = 86400;           //the number of seconds in a day
-        public static readonly int scale = 200000000;           //meters per pixl
-        public static readonly double micron = 1 * (10e-6);     //micron
-        public static readonly double sizeStep = 0.3;           //what is the difference in the sizes of two diff types os particles in microns
-
+        public static readonly int centralMassX = 0;           //the x coordinate of the sun
+        public static readonly int centralMassY = 0;           //the y coordinate of the sun
+        public static readonly double c = 300000000;           //the speed of light
+        public static readonly double L = 2 * (10e30);         //the luminosity of the sun
+        public static readonly double AU = 149600000000;       //the distance between The Earth & the sun
+        public static readonly double A = 0.5;                 //the AVG albedo of the particles
+        public static readonly double p = 1.5;                 //the AVG density of the particles
+        public static readonly double dayInS = 86400;          //the number of seconds in a day
+        public static readonly int scale = 200000000;          //meters per pixl
+        public static readonly double micron = 1 * (10e-6);    //micron
+        public static readonly double sizeStep = 0.3;          //what is the difference in the sizes of two diff types os particles in microns
+        public static readonly double powLawIndex = -3.5;      //the size distribution function is characterized by the power law index of −3.5.
+        public static readonly double distrCoef = 10;          //the coefficient in front of the formula for the size distr
+        public static readonly double diffraction = 1.5;       //the +- angle when creating a line
     }
 }

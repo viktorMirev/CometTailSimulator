@@ -52,6 +52,7 @@
     <Compile Include="Classes\DataModelComet.cs" />
     <Compile Include="Classes\Particle.cs" />
     <Compile Include="Classes\PixelParticle.cs" />
+    <Compile Include="Classes\SimulationManager.cs" />
     <Compile Include="Classes\Velocity.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

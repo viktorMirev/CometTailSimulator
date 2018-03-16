@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CometTailSimulator.Classes
+﻿namespace CometTailSimulator.Classes
 {
     class DataModel
     {
@@ -26,7 +20,7 @@ namespace CometTailSimulator.Classes
             get => distance;
             private set => distance = value/Constants.scale;
         }
-        public double SunAngle { get => sunAngle; private set => sunAngle = value; }
+        public double SunAngle      { get => sunAngle; private set => sunAngle = value; }
         public double VelocityAngle { get => velocityAngle;private set => velocityAngle = value; }
         public double VelocitySpeed { get => velocitySpeed;private set => velocitySpeed = value; }
     }

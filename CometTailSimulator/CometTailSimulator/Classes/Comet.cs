@@ -35,35 +35,49 @@ namespace CometTailSimulator.Classes
         }
         private void AddNewLine(List<Particle> allParticles, double angle, bool isActive, bool isDark)
         {
-            double coefficient = 1;
-            if (isActive) coefficient *= this.cometData.ActiveRegionCoefficient;
-            if (isDark) coefficient   *= this.cometData.NightCoefficient;
+            
+           double coefficient = 1;                                                  //
+           if (isActive) coefficient *= this.cometData.ActiveRegionCoefficient;     // calculating the overallcoefficient
+           if (isDark) coefficient   *= this.cometData.NightCoefficient;            //
 
-            int numberOfParticles = (int)(this.cometData.NumberOfParticlesPerLine * coefficient);
+           int numberOfParticles = (int)(this.cometData.NumberOfParticlesPerLine * coefficient);
 
-            //in radians
-            angle *= (Math.PI / 180);
 
-            Velocity vectorFromEjection = new Velocity(Math.Cos(angle)*cometData.InitialSpeed/Constants.scale, -Math.Sin(angle) * (cometData.InitialSpeed / Constants.scale));
-            Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle) * this.velositySpeed / Constants.scale, Math.Sin(this.velocityAngle) * (this.velositySpeed / Constants.scale));
+            //convert to radians
+            //angle *= (Math.PI / 180);
 
-            Velocity finalVelocity = vectorFromCometVelocity.Add(vectorFromEjection);
-
-            double currSize = cometData.MinimumSize;
-
-            while (currSize<=cometData.MaximumSize)
+            for (double i = cometData.MinimumSize; i < cometData.MaximumSize; i += Constants.sizeStep)
             {
-                
-                currSize += 0.3;
-            }
+                var expCoeff = Constants.distrCoef * Math.Pow(i, Constants.powLawIndex);
+                var currNum = (int)(numberOfParticles * expCoeff);       //exponential implementation
 
+                var angleStep = 2 * Constants.diffraction / currNum;
+
+                angle -= Constants.diffraction;
+
+                for (int j = 0; j < currNum; j++)
+                {
+                    Velocity vectorFromEjection = new Velocity(Math.Cos(angle) * cometData.InitialSpeed / Constants.scale, -Math.Sin(angle) * (cometData.InitialSpeed / Constants.scale));
+                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle) * this.velositySpeed / Constants.scale, Math.Sin(this.velocityAngle) * (this.velositySpeed / Constants.scale));
+
+                    Velocity finalVelocity = vectorFromCometVelocity.Add(vectorFromEjection);
+
+                    allParticles.Add(new Particle(this.x, this.y, i, finalVelocity));
+
+                    angle += angleStep;
+                }
+
+
+            }
+          
         }
         public void AddNewLayer(List<Particle> allParticles)
         {
+           
             var numOfLines = (int)(360 / this.cometData.DensityOfVisualisation);
             var currAngle = 0.0;
 
-            //DA SA NQKOLKO I DA IMA KRAGCHE s malki deto e s povisheno density i golqmo naprimer
+           
             for (int i = 0; i < numOfLines; i++)
             {
                 bool isActive = false;                        //flags if we are in the active region
