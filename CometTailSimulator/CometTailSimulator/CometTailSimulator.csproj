@@ -45,9 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Comet.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\DataManager.cs" />
     <Compile Include="Classes\DataModel.cs" />
+    <Compile Include="Classes\DataModelComet.cs" />
     <Compile Include="Classes\Particle.cs" />
     <Compile Include="Classes\PixelParticle.cs" />
     <Compile Include="Classes\Velocity.cs" />
