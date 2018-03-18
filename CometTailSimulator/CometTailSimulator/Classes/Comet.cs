@@ -16,6 +16,7 @@ namespace CometTailSimulator.Classes
         public Comet(DataModelComet model)
         {
             this.cometData = model;
+            this.daysAfterTheStart = 0;
         }
         public void Update(DataModel data)
         {
@@ -57,10 +58,13 @@ namespace CometTailSimulator.Classes
 
                 for (int j = 0; j < currNum; j++)
                 {
+                    //POSSIBLE IDIOTISM
                     Velocity vectorFromEjection = new Velocity(Math.Cos(angle) * cometData.InitialSpeed / Constants.scale, -Math.Sin(angle) * (cometData.InitialSpeed / Constants.scale));
-                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle) * this.velositySpeed / Constants.scale, Math.Sin(this.velocityAngle) * (this.velositySpeed / Constants.scale));
+                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle) * this.velositySpeed / Constants.scale, -Math.Sin(this.velocityAngle) * (this.velositySpeed / Constants.scale));
 
-                    Velocity finalVelocity = vectorFromCometVelocity.Add(vectorFromEjection);
+                    vectorFromCometVelocity.Add(vectorFromEjection);
+
+                    Velocity finalVelocity = vectorFromCometVelocity;
 
                     allParticles.Add(new Particle(this.x, this.y, i, finalVelocity));
 

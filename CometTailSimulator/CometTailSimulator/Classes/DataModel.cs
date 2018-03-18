@@ -1,6 +1,8 @@
-﻿namespace CometTailSimulator.Classes
+﻿using System.Text;
+
+namespace CometTailSimulator.Classes
 {
-    class DataModel
+    public class DataModel
     {
         private double distance;
         private double sunAngle;
@@ -18,10 +20,24 @@
         public double Distance
         {
             get => distance;
-            private set => distance = value/Constants.scale;
+            private set => distance = value*Constants.AU/Constants.scale;
         }
         public double SunAngle      { get => sunAngle; private set => sunAngle = value; }
         public double VelocityAngle { get => velocityAngle;private set => velocityAngle = value; }
         public double VelocitySpeed { get => velocitySpeed;private set => velocitySpeed = value; }
+
+        public override string ToString()
+        {
+            StringBuilder output = new StringBuilder();
+            output.Append(distance);
+            output.Append("      ");
+            output.Append(sunAngle);
+            output.Append("      ");
+            output.Append(velocityAngle);
+            output.Append("      ");
+            output.Append(velocitySpeed);
+
+            return output.ToString();
+        }
     }
 }
