@@ -9,8 +9,8 @@ namespace CometTailSimulator.Classes
         private Velocity vector;
         private double size;
 
-        public double X { get => x; private set => x = value; }
-        public double Y { get => y; private set => y = value; }
+        public double X { get => x;  set => x = value; }
+        public double Y { get => y;  set => y = value; }
 
         public Particle(double x, double y, double size,Velocity vector)
         {
@@ -41,7 +41,7 @@ namespace CometTailSimulator.Classes
                 (Math.PI * Constants.c * Constants.p * this.size * Constants.micron * (distance * Constants.scale) * (distance * Constants.scale));
             //acceleration formula in the description
 
-            double vectorLenInPix = acc * Constants.dayInS / Constants.scale; //the lenght of the new vector in pixels;
+            double vectorLenInPix = acc * Constants.dayInS * Constants.dayInS / Constants.scale; //the lenght of the new vector in pixels;
 
             double sunVectorX = vectorLenInPix * dX() / distance;
             double sunVectorY = vectorLenInPix * dY() / distance;

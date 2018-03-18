@@ -66,6 +66,10 @@ namespace CometTailSimulator.Classes
 
                     Velocity finalVelocity = vectorFromCometVelocity;
 
+                    //CAUTION!!!!!!!!!!!!!!!!!!
+                    finalVelocity.X *= Constants.dayInS;
+                    finalVelocity.Y *= Constants.dayInS;
+
                     allParticles.Add(new Particle(this.x, this.y, i, finalVelocity));
 
                     angle += angleStep;

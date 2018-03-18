@@ -16,9 +16,9 @@ namespace EphemerisCalculator.Classes
             var x = Constants.centralMassX - distance * Math.Cos((angle/180) * Math.PI );
             var y = Constants.centralMassY + distance * Math.Sin((angle/180) * Math.PI );
 
-            var vX = velocity * Math.Cos(velocityAngle * Math.PI);
-            var vY = velocity * Math.Sin(velocityAngle * Math.PI);
-            Velocity vector = new Velocity(vX / Constants.scale, vY / Constants.scale);
+            var vX = velocity * Math.Cos(velocityAngle * Math.PI/180);//mistake /180 was missing
+            var vY = velocity * Math.Sin(velocityAngle * Math.PI/180);
+            Velocity vector = new Velocity(vX*Constants.dayInS / (Constants.scale*Constants.accuracyOfeph), vY*Constants.dayInS / (Constants.scale*Constants.accuracyOfeph));
 
             comet = new Orbiter(x, y, vector, angle);
             ephemeris = new List<DataModel>();
@@ -37,8 +37,8 @@ namespace EphemerisCalculator.Classes
                 {
                     flagger = 0;
 
-                    double velocity = Math.Sqrt(comet.Vector.X * comet.Vector.X + comet.Vector.Y * comet.Vector.Y)*Constants.scale;
-                    double velocityAngle = Math.Atan2(comet.Vector.X, -comet.Vector.Y) *180/Math.PI;
+                    double velocity = Math.Sqrt(comet.Vector.X * comet.Vector.X + comet.Vector.Y * comet.Vector.Y)*Constants.scale*Constants.accuracyOfeph/Constants.dayInS;
+                    double velocityAngle = Math.Atan2(-comet.Vector.Y, comet.Vector.X) *180/Math.PI;
                     if (velocityAngle < 0) velocityAngle += 360;
 
                     ephemeris.Add(new DataModel(comet.DistanceToSun(), comet.Angle,velocityAngle, velocity));

@@ -12,7 +12,7 @@
         private double maximumSize;                   //the maximum size of a particle in microns
         private int numberOfParticlesPerLine;         //the number which shoud be ejected if it is in a normal region
 
-        DataModelComet(double initSpeed, double rotation, double density, double activeS, double nightC,double activeC,int numOfParticles, double max, double min)
+        public DataModelComet(double initSpeed, double rotation, double density, double activeS, double nightC,double activeC,int numOfParticles, double max, double min)
         {
             this.InitialSpeed = initSpeed;
             this.RotationPeriod = rotation;

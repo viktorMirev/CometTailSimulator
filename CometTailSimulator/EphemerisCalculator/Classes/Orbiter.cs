@@ -39,7 +39,7 @@ namespace EphemerisCalculator.Classes
         public double DistanceToSun()
         {
             double distance = this.DistanceTo(Constants.centralMassX, Constants.centralMassY); // distance to the Sun
-            return (distance * Constants.scale / Constants.AU);
+            return ((distance *Constants.scale* Constants.scale) / (Constants.AU*Constants.AU)); //multiply twice because the data model gets it in AU
         }
 
         
@@ -48,15 +48,15 @@ namespace EphemerisCalculator.Classes
             double distance = this.DistanceTo(Constants.centralMassX, Constants.centralMassY); // distance to the Sun
 
             //calculating the angle
-            this.Angle = Math.Atan2(dY(), dX());
+            this.Angle = -Math.Atan2(-dY(), -dX());
             this.Angle *= (180/Math.PI);
             if (this.Angle < 0) this.Angle += 360;
-
+            //
 
             double acc = Constants.SolarMass * Constants.G / (distance * Constants.scale * distance * Constants.scale);
             //acceleration formula in the description
 
-            double vectorLenInPix = acc * Constants.dayInS / (Constants.scale*Constants.accuracyOfeph); //the lenght of the new vector in pixels;
+            double vectorLenInPix = acc * Constants.dayInS*Constants.dayInS / (Constants.scale*Constants.accuracyOfeph*Constants.accuracyOfeph); //the lenght of the new vector in pixels;
 
             double vectorX = - vectorLenInPix * dX() / distance;
             double vectorY = - vectorLenInPix * dY() / distance;
@@ -67,8 +67,9 @@ namespace EphemerisCalculator.Classes
         public void Update()
         {
             this.Vector.Add(CalculateGravityVector());
-            this.X += this.Vector.X;
-            this.Y += this.Vector.Y;
+            this.X += this.Vector.X;//*Constants.dayInS/Constants.accuracyOfeph;
+            this.Y += this.Vector.Y;//* Constants.dayInS / Constants.accuracyOfeph;
+           
         }
 
 

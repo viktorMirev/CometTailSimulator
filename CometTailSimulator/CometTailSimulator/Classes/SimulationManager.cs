@@ -11,7 +11,7 @@ namespace CometTailSimulator.Classes
         private Comet comet;
         private List<Particle> allParticles;
 
-        SimulationManager(DataModelComet cometData)
+        public SimulationManager(DataModelComet cometData)
         {
             this.comet = new Comet(cometData);
             dataProvider = new DataManager("data.txt");
@@ -59,20 +59,21 @@ namespace CometTailSimulator.Classes
 
         public void Print()
         {
-            int width = (int)(allParticles[allParticles.Count - 1].X) + 100;
-            int height = (int)(allParticles[allParticles.Count - 1].Y) + 200;
+            int width = (int)(allParticles[allParticles.Count - 1].X) + 500;
+            int height = Math.Abs((int)(allParticles[allParticles.Count - 1].Y)) + 500;
 
-            Bitmap image = new Bitmap(width, height);
+            Bitmap image = new Bitmap(width,height);
 
             this.BlackenBitmap(image);
 
             foreach (var particle in allParticles)
             {
                 //to add difference in color
-                image.SetPixel((int)particle.X, (int)particle.Y, Color.White);
+                image.SetPixel(Math.Abs((int)particle.X), Math.Abs((int)particle.Y), Color.White);
             }
 
-            image.Save("Simulation-" + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString());
+            image.Save("Simulation-" + ".jpg");
+            // + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString()
         }
     }
 }

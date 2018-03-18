@@ -2,8 +2,9 @@
  *  The basic idea behind this class is to give the possibility for the user to include 
  *  more than 1 files in order to use them simultaniously
  *  this gives the program more flexibility аnd an opportunity to simulate multiple objects at once
- */ 
+ */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -33,10 +34,11 @@ namespace CometTailSimulator.Classes
 
                 foreach (var line in rawData)
                 {
-                    var tokens = line.Split();
+                    var tokens = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+    
                     //creating new dataModel
                     data.Add(new 
-                        DataModel(double.Parse(rawData[0]),double.Parse(rawData[1]), double.Parse(rawData[2]),double.Parse(rawData[3])));
+                        DataModel(double.Parse(tokens[0]),double.Parse(tokens[1]), double.Parse(tokens[2]),double.Parse(tokens[3])));
                 }
                 return true;
             }
