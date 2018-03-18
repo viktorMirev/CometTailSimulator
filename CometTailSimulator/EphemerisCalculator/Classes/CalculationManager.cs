@@ -29,10 +29,11 @@ namespace EphemerisCalculator.Classes
   
             var allItterations = Constants.accuracyOfeph * duration;
 
-            var flagger = 0;
-            for (int i = 0; i < allItterations; i++)
+
+            var flagger = Constants.accuracyOfeph - 1;
+            for (int i = 0; i <= allItterations; i++)
             {
-                comet.Update();
+                
                 if (flagger==Constants.accuracyOfeph-1)
                 {
                     flagger = 0;
@@ -42,9 +43,11 @@ namespace EphemerisCalculator.Classes
                     if (velocityAngle < 0) velocityAngle += 360;
 
                     ephemeris.Add(new DataModel(comet.DistanceToSun(), comet.Angle,velocityAngle, velocity));
-
+                    comet.Update();
                     continue;   
                 }
+                comet.Update();
+
                 flagger++;
 
             }
@@ -57,7 +60,7 @@ namespace EphemerisCalculator.Classes
             {
                 output.AppendLine(item.ToString());
             }
-            File.WriteAllText("data.txt", output.ToString());
+            File.WriteAllText("../../../CometTailSimulator/bin/Debug/data.txt", output.ToString());
         }
             
 

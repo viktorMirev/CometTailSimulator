@@ -33,6 +33,7 @@ namespace CometTailSimulator.Classes
             //updating the angle of the comet according to the distant stars
 
             this.rotationAngle = 360 * (this.daysAfterTheStart % this.cometData.RotationPeriod);
+            daysAfterTheStart++;
         }
         private void AddNewLine(List<Particle> allParticles, double angle, bool isActive, bool isDark)
         {
@@ -79,8 +80,9 @@ namespace CometTailSimulator.Classes
             }
           
         }
-        public void AddNewLayer(List<Particle> allParticles)
+        public void AddNewLayer(List<Particle> allParticles, List<KeyValuePair<int,int>> cometTrail)
         {
+            cometTrail.Add(new KeyValuePair<int, int>((int)this.x, (int)this.y));
            
             var numOfLines = (int)(360 / this.cometData.DensityOfVisualisation);
             var currAngle = 0.0;

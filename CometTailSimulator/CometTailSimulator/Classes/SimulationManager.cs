@@ -11,11 +11,17 @@ namespace CometTailSimulator.Classes
         private Comet comet;
         private List<Particle> allParticles;
 
+        //TEST SUBJECT
+        private List<KeyValuePair<int, int>> cometTrail;
+
         public SimulationManager(DataModelComet cometData)
         {
             this.comet = new Comet(cometData);
             dataProvider = new DataManager("data.txt");
             allParticles = new List<Particle>();
+
+            //TEST SUBJECT
+            this.cometTrail = new List<KeyValuePair<int, int>>();
         }
 
         private void UpdateParticles()
@@ -33,7 +39,10 @@ namespace CometTailSimulator.Classes
                 while (currData != null)
                 {
                     comet.Update(currData);
-                    comet.AddNewLayer(allParticles);
+
+                    //TEST SUBJECT
+                    comet.AddNewLayer(allParticles,cometTrail);
+
                     this.UpdateParticles();
 
                     currData = dataProvider.NextData();
@@ -46,7 +55,9 @@ namespace CometTailSimulator.Classes
             }
         }
 
-        private void BlackenBitmap(Bitmap img)
+
+        //Actually is always black
+        /*private void BlackenBitmap(Bitmap img)
         {
             for (int i = 0; i < img.Width; i++)
             {
@@ -55,24 +66,27 @@ namespace CometTailSimulator.Classes
                     img.SetPixel(i, j, Color.Black);
                 }
             }
-        }
+        }*/
 
         public void Print()
         {
-            int width = (int)(allParticles[allParticles.Count - 1].X) + 500;
-            int height = Math.Abs((int)(allParticles[allParticles.Count - 1].Y)) + 500;
-
-            Bitmap image = new Bitmap(width,height);
-
-            this.BlackenBitmap(image);
+            Bitmap testImg = new Bitmap(1000, 800);
+            testImg.SetPixel(Constants.centralMassX+300, Constants.centralMassY+300, Color.Red);
+            foreach (var item in this.cometTrail)
+            {
+                testImg.SetPixel(item.Key+300, item.Value+300, Color.Yellow);
+            }
+            
+            
+            
 
             foreach (var particle in allParticles)
             {
                 //to add difference in color
-                image.SetPixel(Math.Abs((int)particle.X), Math.Abs((int)particle.Y), Color.White);
+                testImg.SetPixel((int)particle.X+300,(int)particle.Y+300, Color.White);
             }
 
-            image.Save("Simulation-" + ".jpg");
+            testImg.Save("TestSim.jpg");
             // + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString()
         }
     }
