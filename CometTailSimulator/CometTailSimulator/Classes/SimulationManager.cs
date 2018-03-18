@@ -41,7 +41,7 @@ namespace CometTailSimulator.Classes
                     comet.Update(currData);
 
                     //TEST SUBJECT
-                    comet.AddNewLayer(allParticles,cometTrail);
+                    comet.AddNewLayer(allParticles, cometTrail);
 
                     this.UpdateParticles();
 
@@ -56,38 +56,39 @@ namespace CometTailSimulator.Classes
         }
 
 
-        //Actually is always black
-        /*private void BlackenBitmap(Bitmap img)
-        {
-            for (int i = 0; i < img.Width; i++)
-            {
-                for (int j = 0; j < img.Height; j++)
-                {
-                    img.SetPixel(i, j, Color.Black);
-                }
-            }
-        }*/
-
         public void Print()
         {
-            Bitmap testImg = new Bitmap(1000, 800);
-            testImg.SetPixel(Constants.centralMassX+300, Constants.centralMassY+300, Color.Red);
+            
+            var width = 6000;
+            int height = 4000;
+            int offset = 2000;
+            Bitmap testImg = new Bitmap(width, height);
+            testImg.SetPixel(Constants.centralMassX, Constants.centralMassY + offset, Color.Red);
             foreach (var item in this.cometTrail)
             {
-                testImg.SetPixel(item.Key+300, item.Value+300, Color.Yellow);
+                testImg.SetPixel(item.Key, item.Value + offset, Color.Yellow);
             }
-            
-            
-            
+
+
+
 
             foreach (var particle in allParticles)
             {
-                //to add difference in color
-                testImg.SetPixel((int)particle.X+300,(int)particle.Y+300, Color.White);
-            }
+               //if (particle.X < 0 || particle.X > width || particle.Y < 0 || particle.Y > height ) continue;
+                
+                Color currColor = Color.White;
+                if (particle.Size >= 3 && particle.Size <= 5) currColor = Color.Aqua;
+                if (particle.Size > 5) currColor = Color.Blue;
+                
 
-            testImg.Save("TestSim.jpg");
-            // + DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString()
+                testImg.SetPixel((int)particle.X, (int)particle.Y + offset, currColor);
+                
+
+
+            }
+            testImg.Save("Sim" + DateTime.Now.Ticks + ".jpg");
+            MessageBox.Show("DONE!");
+            
         }
     }
 }

@@ -13,10 +13,15 @@ namespace CometTailSimulator.Classes
         private double rotationAngle;             //represents the angle of rotation relative to the distant stars
         private int daysAfterTheStart;            //the number of days that have passed since the beginning of the simulation
         private DataModelComet cometData;         //holds all the data needed
+
+        public double X { get => x; private set => x = value; }
+        public double Y { get => y; private set => y = value; }
+
         public Comet(DataModelComet model)
         {
             this.cometData = model;
             this.daysAfterTheStart = 0;
+            this.rotationAngle = 0.0;
         }
         public void Update(DataModel data)
         {
@@ -25,18 +30,20 @@ namespace CometTailSimulator.Classes
             double dX = data.Distance * (Math.Cos(elong * Math.PI / 180));
             double dY = data.Distance * (Math.Sin(elong * Math.PI / 180));
 
-            this.x = Constants.centralMassX - dX;
-            this.y = Constants.centralMassY + dY;
+            this.X = Constants.centralMassX - dX;
+            this.Y = Constants.centralMassY + dY;
 
             this.velocityAngle = data.VelocityAngle;
             this.velositySpeed = data.VelocitySpeed;
             //updating the angle of the comet according to the distant stars
 
-            this.rotationAngle = 360 * (this.daysAfterTheStart % this.cometData.RotationPeriod);
+            this.rotationAngle += 360* Constants.dayInS / (cometData.RotationPeriod * 86400);
+            this.rotationAngle %= 360;
             daysAfterTheStart++;
         }
         private void AddNewLine(List<Particle> allParticles, double angle, bool isActive, bool isDark)
         {
+            
             
            double coefficient = 1;                                                  //
            if (isActive) coefficient *= this.cometData.ActiveRegionCoefficient;     // calculating the overallcoefficient
@@ -50,6 +57,7 @@ namespace CometTailSimulator.Classes
 
             for (double i = cometData.MinimumSize; i < cometData.MaximumSize; i += Constants.sizeStep)
             {
+                
                 var expCoeff = Constants.distrCoef * Math.Pow(i, Constants.powLawIndex);
                 var currNum = (int)(numberOfParticles * expCoeff);       //exponential implementation
 
@@ -60,29 +68,26 @@ namespace CometTailSimulator.Classes
                 for (int j = 0; j < currNum; j++)
                 {
                     //POSSIBLE IDIOTISM
-                    Velocity vectorFromEjection = new Velocity(Math.Cos(angle) * cometData.InitialSpeed / Constants.scale, -Math.Sin(angle) * (cometData.InitialSpeed / Constants.scale));
-                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle) * this.velositySpeed / Constants.scale, -Math.Sin(this.velocityAngle) * (this.velositySpeed / Constants.scale));
+                    Velocity vectorFromEjection = new Velocity(Math.Cos(angle * Math.PI / 180) * cometData.InitialSpeed * Constants.dayInS / Constants.scale, -Math.Sin(angle * Math.PI / 180) * (cometData.InitialSpeed * Constants.dayInS / Constants.scale));
+                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle * Math.PI / 180) * this.velositySpeed * Constants.dayInS / Constants.scale, -Math.Sin(this.velocityAngle * Math.PI / 180) * (this.velositySpeed * Constants.dayInS / Constants.scale));
 
                     vectorFromCometVelocity.Add(vectorFromEjection);
 
                     Velocity finalVelocity = vectorFromCometVelocity;
 
-                    //CAUTION!!!!!!!!!!!!!!!!!!
-                    finalVelocity.X *= Constants.dayInS;
-                    finalVelocity.Y *= Constants.dayInS;
-
-                    allParticles.Add(new Particle(this.x, this.y, i, finalVelocity));
+                    allParticles.Add(new Particle(this.X, this.Y, i, finalVelocity));
 
                     angle += angleStep;
                 }
-
+                
 
             }
           
         }
         public void AddNewLayer(List<Particle> allParticles, List<KeyValuePair<int,int>> cometTrail)
         {
-            cometTrail.Add(new KeyValuePair<int, int>((int)this.x, (int)this.y));
+            cometTrail.Add(new KeyValuePair<int, int>((int)this.X, (int)this.Y));
+
            
             var numOfLines = (int)(360 / this.cometData.DensityOfVisualisation);
             var currAngle = 0.0;

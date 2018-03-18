@@ -20,7 +20,8 @@ namespace CometTailSimulator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DataModelComet comet = new DataModelComet(200, 1.5, 10, 60, 0.5, 1.5, 100, 7, 2);
+            DataModelComet comet = new DataModelComet(1000, 1.5,15, 34,0.1, 50, 5, 9, 2);
+           // DataModelComet comet = new DataModelComet(5000, 1.5, 15, 34, 0.1, 50, 25, 9, 2);
             SimulationManager m = new SimulationManager(comet);
             m.Start();
             m.Print();
