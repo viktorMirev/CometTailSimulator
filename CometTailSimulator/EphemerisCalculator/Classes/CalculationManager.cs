@@ -31,6 +31,7 @@ namespace EphemerisCalculator.Classes
 
 
             var flagger = Constants.accuracyOfeph - 1;
+            //CHANGE <=
             for (int i = 0; i <= allItterations; i++)
             {
                 
@@ -56,6 +57,7 @@ namespace EphemerisCalculator.Classes
         private void Print()
         {
             StringBuilder output = new StringBuilder();
+           
             foreach (var item in this.ephemeris)
             {
                 output.AppendLine(item.ToString());

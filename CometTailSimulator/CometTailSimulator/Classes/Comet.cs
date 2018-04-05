@@ -42,10 +42,9 @@ namespace CometTailSimulator.Classes
             daysAfterTheStart++;
         }
         private void AddNewLine(List<Particle> allParticles, double angle, bool isActive, bool isDark)
-        {
+        {         
             
-            
-           double coefficient = 1;                                                  //
+           double coefficient = 0.40;                                                  //
            if (isActive) coefficient *= this.cometData.ActiveRegionCoefficient;     // calculating the overallcoefficient
            if (isDark) coefficient   *= this.cometData.NightCoefficient;            //
 
@@ -61,6 +60,8 @@ namespace CometTailSimulator.Classes
                 var expCoeff = Constants.distrCoef * Math.Pow(i, Constants.powLawIndex);
                 var currNum = (int)(numberOfParticles * expCoeff);       //exponential implementation
 
+                if (currNum == 0) continue;
+
                 var angleStep = 2 * Constants.diffraction / currNum;
 
                 angle -= Constants.diffraction;
@@ -68,8 +69,8 @@ namespace CometTailSimulator.Classes
                 for (int j = 0; j < currNum; j++)
                 {
                     //POSSIBLE IDIOTISM
-                    Velocity vectorFromEjection = new Velocity(Math.Cos(angle * Math.PI / 180) * cometData.InitialSpeed * Constants.dayInS / Constants.scale, -Math.Sin(angle * Math.PI / 180) * (cometData.InitialSpeed * Constants.dayInS / Constants.scale));
-                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle * Math.PI / 180) * this.velositySpeed * Constants.dayInS / Constants.scale, -Math.Sin(this.velocityAngle * Math.PI / 180) * (this.velositySpeed * Constants.dayInS / Constants.scale));
+                    Velocity vectorFromEjection = new Velocity(Math.Cos(angle * Math.PI / 180.0) * cometData.InitialSpeed /*(1/i) */* Constants.dayInS / Constants.scale, -Math.Sin(angle * Math.PI / 180.0) * (cometData.InitialSpeed /* (1 / i) */* Constants.dayInS / Constants.scale));
+                    Velocity vectorFromCometVelocity = new Velocity(Math.Cos(this.velocityAngle * Math.PI / 180.0) * this.velositySpeed * Constants.dayInS / Constants.scale, -Math.Sin(this.velocityAngle * Math.PI / 180.0) * (this.velositySpeed * Constants.dayInS / Constants.scale));
 
                     vectorFromCometVelocity.Add(vectorFromEjection);
 
